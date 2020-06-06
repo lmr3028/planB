@@ -1,0 +1,13 @@
+package com.pioneer.developer.admin.seller.product.model;
+
+import org.apache.ibatis.type.Alias;
+
+
+import lombok.Data;
+
+@Data
+@Alias("productBookmarkDto")
+public class ProductBookmarkDto {
+	private int producctno;
+	private String id;
+}

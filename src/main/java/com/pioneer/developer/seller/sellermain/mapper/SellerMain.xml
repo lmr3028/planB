@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="com.pioneer.developer.seller.sellermain.mapper.SellerMainMapper">
+
+
+	<select id="getGraph4Data" resultType="java.util.LinkedHashMap">
+		SELECT
+		COUNT(CASE WHEN CNT.rat BETWEEN 0.0 AND 0.9 THEN 1 END) as zero,
+		COUNT(CASE WHEN CNT.rat BETWEEN 1.0 AND 1.9 THEN 1 END) as one,
+		COUNT(CASE WHEN CNT.rat BETWEEN 2.0 AND 2.9 THEN 1 END) as two,
+		COUNT(CASE WHEN CNT.rat BETWEEN 3.0 AND 3.9 THEN 1 END) as three,
+		COUNT(CASE WHEN CNT.rat BETWEEN 4.0 AND 4.9 THEN 1 END) as four,
+		COUNT(CASE WHEN CNT.rat = 5.0 THEN 1 END) as five
+		FROM (SELECT DISTINCT R.PRODUCTNO, AVG(R.RATING) as rat, P.ID FROM REVIEW R LEFT OUTER JOIN
+		PRODUCT P ON P.PRODUCTNO = R.PRODUCTNO WHERE P.ID = #{id}
+		GROUP BY R.PRODUCTNO HAVING AVG(RATING)) CNT;
+	</select>
+
+	<select id="getGraph3Data" resultType="hashMap">
+		SELECT DATE_FORMAT(DATE(SYS_DATE), "%m / %d")  AS date,
+		COUNT(*) as count
+		FROM ORDERS WHERE SALES_ID = #{sales_id}
+		GROUP BY SYS_DATE;
+	</select>
+
+	<select id="myProductList" resultType="hashMap">
+		SELECT PRODUCTNO, PNAME, COUNT(*) as COUNT FROM ORDERS WHERE SALES_ID = #{sales_id}
+		GROUP BY PRODUCTNO, PNAME order by COUNT desc limit 12;
+	</select>
+
+	<select id="myProductReview" resultType="hashMap">
+		SELECT R.REVIEWNO, R.PRODUCTNO, R.ID, R.CONTENTS, R.SYS_DATE, R.RATING
+		FROM REVIEW R JOIN PRODUCT P ON R.PRODUCTNO = P.PRODUCTNO
+		WHERE P.ID = #{id}  ORDER BY REVIEWNO DESC limit 8;
+	</select>
+
+	<select id="myProductCount" resultType="int">
+		SELECT COUNT(*) as COUNT FROM ORDERS WHERE SYS_DATE = CURDATE() AND
+		SALES_ID = #{sales_id};
+	</select>
+
+	<select id="myProductPrice" resultType="String">
+		SELECT FORMAT(SUM(QUANTITY*PRICE),0)  FROM ORDERS WHERE SYS_DATE = CURDATE() AND SALES_ID =#{sales_id};
+	</select>
+
+	<select id="myProductRating" resultType="String">
+		SELECT CAST(ROUND(AVG(R.RATING), 2) AS CHAR(3)) as avgRating FROM REVIEW R JOIN PRODUCT P ON R.PRODUCTNO = P.PRODUCTNO
+		WHERE P.ID = #{id};
+	</select>
+
+	<select id="myProductListCount" resultType="int">
+		SELECT COUNT(*) FROM PRODUCT WHERE ID = #{id};
+	</select>
+
+</mapper>

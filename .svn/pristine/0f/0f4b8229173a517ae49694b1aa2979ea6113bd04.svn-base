@@ -1,0 +1,68 @@
+
+$(document).ready(function purchaseHistory(){
+	$.ajax({
+		type : "post",
+		url : "/rest/home/mmember/purchaseHistory",
+		dataType : "json", // 여러 개 항목 받아옴
+		success : function(result){
+			console.log(result);
+
+			var output = "";
+			for (var i = 0; i < result.length; i++) {
+				console.log(result[i])
+
+				output +='<div class="wishlist-content">'
+				output +='<div class="wishlist-table table-responsive">'
+				output +='<table>'
+				output +='<thead>'
+				output +='<tr>'
+				output +='<th class="product-remove"><span class="nobr"> 구매 번호 </span></th>'
+				output +='<th class="product-thumbnail"> 구매 상품사진 </th>'
+				output +='<th class="product-name"><span class="nobr"> 구매 상품이름 </span></th>'
+				output +='<th class="product-price"><span class="nobr"> 구매 상품가격 </span></th>'
+				output +='<th class="product-name"><span class="nobr"> 구매 날짜 </span></th>'
+				output +='<th class="product-stock-stauts"><span class="nobr"> 수량 </span></th>'
+				output +='<th class="product-add-to-cart"><span class="nobr">리뷰쓰기</span></th>'
+				output +='</tr>'
+				output +='</thead>'
+				output +='<tbody>'
+				output +='<tr>'
+				output +='<td class="product-remove"><a href="#">' + result[i].ORDERSNO + '</a></td>'
+				output +='<td class="product-thumbnail"><a href="#">''<img src=/web/images/' + result[i].PHOTO1NAME + '>''</a></td>'
+				output +='<td class="product-name"><a href="#">' + result[i].PNAME + '</a></td>'
+				output +='<td class="product-price"><span class="amount">' + result[i].PRICE + '</span></td>'
+				output +='<td class="product-name"><a href="#">' + result[i].SYS_DATE + '</a></td>'
+				output +='<td class="product-stock-status"><span class="wishlist-in-stock">' + result[i].QUANTITY + '</span></td>'
+				output +='<td class="product-add-to-cart"><a href="#"> 리뷰쓰기 </a></td>'
+
+				output +='<div class="col-md-3 single__pro col-lg-3 col-sm-4 col-xs-12 cat--' + result[i].CATEGORYNO + '">'
+				output +='<div class="product__inner">'
+				output +='<div class="pro__thumb">'
+				output +='<a href="#">'
+				output +='<img src=/web/images/' + result[i].PHOTO1NAME + '>'
+				output +='</a>'
+				output +='</div>'
+				output +='<div class="product__hover__info">'
+				output +='<ul class="product__action">'
+				output +='<li><a data-toggle="modal" data-target="#productModal" title="Quick View" class="quick-view modal-view detail-link" href="#"><span class="ti-plus"></span></a></li>'
+				output +='<li><a title="Add TO Cart" href="cart.html"><span class="ti-shopping-cart"></span></a></li>'
+				output +='<li><a title="Wishlist" href="wishlist.html"><span class="ti-heart"></span></a></li>'
+				output +='</ul>'
+				output +='</div>'
+				output +='</div>'
+				output +='<h2><a>' + result[i].PNAME + '</a><h2>'
+				output +='<ul class="product__price">'
+				output +='<li class="new__price">' + result[i].PRICE + '원</li>'
+				output +='</ul>'
+				output +='</div>'
+				output +='</div>'
+				output +='</div>'
+			}
+
+			$("#purchaseHistory").append(output); //output에 담긴 내용을 html로 변환해서 div 영역에 출력
+		},
+		error : function(){
+			console.log("통신실패!");
+		}
+	});
+});

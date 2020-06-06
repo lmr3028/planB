@@ -1,0 +1,18 @@
+package com.pioneer.developer.sys.sysmain.service;
+
+
+import org.springframework.stereotype.Service;
+
+import com.pioneer.developer.sys.sysmain.mapper.SysMainMapper;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class SysMainServiceImpl implements SysMainService {
+
+	private final SysMainMapper sysMainMapper;
+
+}

@@ -1,0 +1,5 @@
+package com.pioneer.developer.admin.sys.main.service;
+
+public interface SysMainService {
+
+}

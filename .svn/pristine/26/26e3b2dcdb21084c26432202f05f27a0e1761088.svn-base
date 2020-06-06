@@ -1,0 +1,54 @@
+/*--------------------------------------------------------------
+  Template Name: Tmart-Minimalist eCommerce HTML5 Template.
+  Template URI: #
+  Description: Tmart is a unique website template designed in HTML with a simple & beautiful look. There is an excellent solution for creating clean, wonderful and trending material design corporate, corporate any other purposes websites.
+  Author: Theme365
+  Version: 1.0
+---------------------------------------------------------------*/
+
+/* ----------------------------------------------------
+	You can put your custom css code here:
+-------------------------------------------------------*/
+
+header div.container > div.row {height:75px;}
+div.main-slider.custom_slider .slick-prev {left:8%;}
+div.main-slider.custom_slider .slick-next {right:8%;}
+div.main-slider.custom_slider .slide-item > .slide-con > .slide-txt {padding-left:20%;}
+div.main-slider.custom_slider .slide-item-1 > .slide-con > .slide-txt {padding:0%;}
+div.mypage_ti {margin-bottom:70px; background-color:#366cf3; padding:30px 40px; text-align:center;}
+div.mypage_ti > h2, div.mypage_ti > h3 {color:#fff;}
+div.mypage_ti > h2 {font-size:45px;}
+div.mypage_ti > h3 {font-size:28px; line-height:45px;}
+div.mypage_container {margin:0 !important;}
+div.mypage_container > div.single__chooose {margin:0 !important;}
+div.mypage_container > div.single__chooose:first-of-type {border-right:1px solid #888;}
+div.mypage_container > div.single__chooose > a {
+	padding:50px 70px;
+	display:block;
+	-webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.3s ease-out 0s;
+}
+div.mypage_container > div.single__chooose > a:first-of-type {border-bottom:1px solid #888;}
+div.mypage_container > div.single__chooose > a:hover {background-color:#f6f6f6; }
+div.mypage_container div.choose__us {margin:0 !important; display:table;}
+div.mypage_container div.choose__us > div.choose__icon {display:table-cell; vertical-align:middle; padding-right:30px;}
+.choose__details h4 {margin-bottom:2px !important;}
+
+.portfolio-full-image .tab-pane.fade img {height:100%;}
+.product__big__images {width:1000%;}
+
+@media (max-width: 767px) {
+	.pot-small-img {margin-top:10px;}
+}
+
+@media (max-width: 900px) {
+	.product__big__images {width:527%;}
+}
+
+@media (max-width: 849px) {
+	.product__big__images {width:825%;}
+}
+

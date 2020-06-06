@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pioneer.developer.home.notice.mapper.NoticeMainMapper">
+
+		<select id="noticeSlider" resultType="hashmap">
+		SELECT
+		NOTICENO as noticeno
+		,TITLE as title
+		FROM NOTICE
+		WHERE USE_YN = 'Y' AND CATEGORYNO = '101'
+		ORDER BY NOTICENO DESC
+	</select>
+
+
+	<select id="homeNoticeList" resultType="hashmap">
+		SELECT * FROM
+		NOTICE
+		WHERE  CATEGORYNO = '101' AND USE_YN = 'Y'
+		ORDER BY NOTICENO DESC
+	</select>
+
+	<select id="homeNoticeListMain" resultType="hashmap">
+		SELECT * FROM
+		NOTICE
+		WHERE  CATEGORYNO = '102' AND USE_YN = 'Y'
+		ORDER BY NOTICENO DESC LIMIT 3
+	</select>
+
+	<select id="noticeCategory" resultType="hashmap">
+	SELECT c.CATEGORYNAME, COUNT(*) as count FROM NOTICE n
+	JOIN CATEGORY c ON c.CATEGORYNO = n.CATEGORYNO
+	WHERE n.USE_YN = 'Y'
+	GROUP BY c.CATEGORYNAME;
+	</select>
+
+	<select id="latestPost" resultType="hashmap">
+	SELECT * FROM (
+	SELECT * FROM NOTICE WHERE CATEGORYNO = '101' AND USE_YN = 'Y' ORDER BY
+	NOTICENO DESC LIMIT 3
+	) as n ORDER BY NOTICENO
+	</select>
+
+	<insert id="eventInsert">
+		INSERT INTO NOTICE_EVENT
+		(ID,NAME)
+		VALUES(#{id},#{name});
+	</insert>
+
+	<select id="noticeView" parameterType="Integer"	resultType="noticeMainWriteDto">
+		SELECT *
+		 FROM NOTICE
+		 WHERE NOTICENO = #{noticeno}
+	</select>
+
+</mapper>

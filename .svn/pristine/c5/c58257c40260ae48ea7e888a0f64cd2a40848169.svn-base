@@ -1,0 +1,32 @@
+package com.pioneer.developer.sys.notice.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.pioneer.developer.sys.notice.mapper.NoticeMapper;
+import com.pioneer.developer.sys.notice.model.NoticeWriteDto;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class NoticeServiceImpl implements NoticeService {
+
+	private final NoticeMapper noticeMapper;
+
+	// 공지사항 등록
+	@Override
+	public void addNotice(NoticeWriteDto noticeWriteDto) {
+		noticeMapper.addNotice(noticeWriteDto);
+	}
+
+	// 공지사항 목록
+	@Override
+	public List<NoticeWriteDto> noticeList() {
+		return noticeMapper.noticeList();
+	}
+
+}

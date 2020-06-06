@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.member.join.mapper.MemberJoinMapper">
+
+	<insert id="signup">
+		INSERT INTO MEMBER (ID, PASSWORD, NAME, BIRTH, GENDER, ADDRESS, PHONE, DIVISION, SYS_DATE, CHANGE_DATE)VALUES
+		(#{id}, #{password}, #{name}, #{birth}, #{gender}, #{fulladdress}, #{phone}, 1, NOW(), NOW())
+	</insert>
+
+		<!-- 회원가입 ID 중복가입 확인  -->
+	<select id="confirmJoinId" resultType="int">
+		SELECT	COUNT(*)
+		FROM	MEMBER
+		WHERE	ID = #{id}
+	</select>
+</mapper>

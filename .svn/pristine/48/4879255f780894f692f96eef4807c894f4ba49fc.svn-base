@@ -1,0 +1,84 @@
+package com.pioneer.developer.seller.product.web;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.pioneer.developer.seller.product.model.ProductDto;
+import com.pioneer.developer.seller.product.service.ProductService;
+import com.pioneer.developer.member.login.mapper.MemberLoginMapper;
+import com.pioneer.developer.member.login.model.MemberLoginDto;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+
+
+/**
+ * *********************************************************************************
+ * @PROJECT      : PlanB 쇼핑몰 구축
+ * @PROGRAMID    : ProductCommonController.java
+ * @DESCRIPTION  :
+ * @AUTHOR       : 김성우
+ * @CREATEDDATE  : 2020. 05. 09
+ * HISTORY
+ * =================================================================================
+ * DATE                NAME                  DESCRIPTION
+ * ---------------------------------------------------------------------------------
+ * 2020. 05. 09        김성우                                        First Generated
+ * *********************************************************************************
+ */
+
+
+@Log4j2
+@RequiredArgsConstructor
+@Controller
+@RequestMapping("/seller/product/")
+public class ProductController {
+
+	private final ProductService productService;
+	private final HttpSession session;
+	private final MemberLoginMapper memberLoginMapper;
+
+	//등록 화면 이동
+	@RequestMapping("addProductView")
+	public String addProductView() {
+		return "product/addProduct.slr";
+	}
+
+	//상품 등록
+	@RequestMapping("addProduct")
+	public String addProduct(ProductDto productDto, Model model) throws Exception {
+		log.info(" ######## product : " + productDto.toString());
+
+		productService.addProduct(productDto);
+		return "redirect:seller/product/myProductListView";
+	}
+
+	// (RestController에서 처리)
+	@RequestMapping("myProductListView")
+	public String myProductListView() {
+		return "product/myProductListView.slr";
+	}
+
+	//상품 수정?
+	@RequestMapping("/productUpdate/{productno}")
+    private String productUpdate(MemberLoginDto memberLoginDto, int productno) {
+
+    	MemberLoginDto dto = memberLoginMapper.login(memberLoginDto);
+        session.setAttribute("id",dto.getId());
+        productService.productUpdate(productno, "id");
+
+        return "product/addProduct.slr";
+    }
+
+	//상품 등록
+	@RequestMapping("addModal")
+	public String addModal() throws Exception {
+		return "admin/seller/product/addProduct.single";
+	}
+
+
+}

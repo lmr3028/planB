@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<!-- HOMEPAGE -->
+    <definition name="home" template="/WEB-INF/tiles/layout/homeLayout.jsp">
+    	<put-attribute name="homeHeader" value="/WEB-INF/tiles/home/homeHeader.jsp" />
+        <put-attribute name="body" value="" />
+    	<put-attribute name="homeFooter" value="/WEB-INF/tiles/home/homeFooter.jsp" />
+    </definition>
+    <definition name="*.home" extends="home">
+        <put-attribute name="body" value="/WEB-INF/jsp/home/{1}.jsp" />
+    </definition>
+    <definition name="*/*.home" extends="home">
+        <put-attribute name="body" value="/WEB-INF/jsp/home/{1}/{2}.jsp" />
+    </definition>
+    <definition name="*/*/*.home" extends="home">
+        <put-attribute name="body" value="/WEB-INF/jsp/home/{1}/{2}/{3}.jsp" />
+    </definition>
+    <definition name="*/*/*/*.home" extends="home">
+        <put-attribute name="body" value="/WEB-INF/jsp/home/{1}/{2}/{3}/{4}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*.home" extends="home">
+        <put-attribute name="body" value="/WEB-INF/jsp/home/{1}/{2}/{3}/{4}/{5}.jsp" />
+    </definition>
+
+    <!-- SYS ADMIN -->
+    <definition name="sys" template="/WEB-INF/tiles/layout/sysLayout.jsp">
+        <put-attribute name="adminHeader" value="/WEB-INF/tiles/admin/adminHeader.jsp" />
+        <put-attribute name="sysMenu" value="/WEB-INF/tiles/admin/sys/sysMenu.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="adminFooter" value="/WEB-INF/tiles/admin/adminFooter.jsp" />
+    </definition>
+    <definition name="*.sys" extends="sys">
+        <put-attribute name="body" value="/WEB-INF/jsp/sys/{1}.jsp" />
+    </definition>
+    <definition name="*/*.sys" extends="sys">
+        <put-attribute name="body" value="/WEB-INF/jsp/sys/{1}/{2}.jsp" />
+    </definition>
+    <definition name="*/*/*.sys" extends="sys">
+        <put-attribute name="body" value="/WEB-INF/jsp/sys/{1}/{2}/{3}.jsp" />
+    </definition>
+    <definition name="*/*/*/*.sys" extends="sys">
+        <put-attribute name="body" value="/WEB-INF/jsp/sys/{1}/{2}/{3}/{4}.jsp" />
+    </definition>
+
+    <!-- SELLER ADMIN -->
+    <definition name="slr" template="/WEB-INF/tiles/layout/sellerLayout.jsp">
+        <put-attribute name="adminHeader" value="/WEB-INF/tiles/admin/adminHeader.jsp" />
+        <put-attribute name="sellerMenu" value="/WEB-INF/tiles/admin/seller/sellerMenu.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="adminFooter" value="/WEB-INF/tiles/admin/adminFooter.jsp" />
+    </definition>
+    <definition name="*.slr" extends="slr">
+        <put-attribute name="body" value="/WEB-INF/jsp/seller/{1}.jsp" />
+    </definition>
+    <definition name="*/*.slr" extends="slr">
+        <put-attribute name="body" value="/WEB-INF/jsp/seller/{1}/{2}.jsp" />
+    </definition>
+    <definition name="*/*/*.slr" extends="slr">
+        <put-attribute name="body" value="/WEB-INF/jsp/seller/{1}/{2}/{3}.jsp" />
+    </definition>
+    <definition name="*/*/*/*.slr" extends="slr">
+        <put-attribute name="body" value="/WEB-INF/jsp/seller/{1}/{2}/{3}/{4}.jsp" />
+    </definition>
+
+	<!-- 단일 페이지 / 로그인 등 -->
+    <definition name="single" template="/WEB-INF/tiles/layout/singleLayout.jsp">
+    	<put-attribute name="adminHeader" value="/WEB-INF/tiles/admin/adminHeader.jsp" />
+        <put-attribute name="body" value=""/>
+    </definition>
+    <definition name="*.single" extends="single">
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp" />
+    </definition>
+    <definition name="*/*.single" extends="single">
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}.jsp" />
+    </definition>
+    <definition name="*/*/*.single" extends="single">
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+    </definition>
+    <definition name="*/*/*/*.single" extends="single">
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}/{3}/{4}.jsp" />
+    </definition>
+
+</tiles-definitions>

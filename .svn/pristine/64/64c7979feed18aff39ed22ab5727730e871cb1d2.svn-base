@@ -1,0 +1,24 @@
+package com.pioneer.developer.admin.sys.main.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+
+@Log4j2
+@RequiredArgsConstructor
+@Controller
+@RequestMapping("/sys/main")
+public class SysMainController {
+
+
+	@RequestMapping("/main")
+	public String sysMain() {
+		log.info("SYS MAIN");
+		return "/main/sysMain.sys";
+	}
+
+
+}

@@ -1,0 +1,12 @@
+package com.pioneer.developer.member.login.service;
+
+import java.security.NoSuchAlgorithmException;
+
+import com.pioneer.developer.member.login.model.MemberLoginDto;
+
+public interface MemberLoginService {
+
+	MemberLoginDto login(MemberLoginDto memberLoginDto) throws NoSuchAlgorithmException;
+
+
+}

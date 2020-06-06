@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.seller.product.mapper.ProductMapper">
+
+	<insert id="addProduct">
+		INSERT INTO PRODUCT (ID,PNAME,PRICE,CATEGORYNO,SIMPLECONTENT,CONTENT,P_PHOTO1NAME,P_PHOTO2NAME,P_PHOTO3NAME,P_PHOTO4NAME)
+			VALUES(#{id},#{pname},#{price},#{categoryno},#{simplecontent},#{content},#{p_photo1name},#{p_photo2name},#{p_photo3name},#{p_photo4name})
+	</insert>
+
+	<select id="myProductList" resultType="hashmap">
+		SELECT * FROM PRODUCT P LEFT OUTER JOIN CATEGORY C ON P.CATEGORYNO = C.CATEGORYNO
+	</select>
+
+ 	<delete id="productDelete" parameterType="int">
+		DELETE FROM PRODUCT WHERE PRODUCTNO = #{productno}
+	</delete>
+
+	<select id="productView" parameterType="int" resultType="productDto">
+		SELECT * FROM PRODUCT P LEFT OUTER JOIN CATEGORY C ON P.CATEGORYNO = C.CATEGORYNO WHERE PRODUCTNO = #{productno}
+	</select>
+
+	<update id="productUpdate">
+		UPDATE PRODUCT SET #{id},#{pname},#{price},#{categoryno},#{simplecontent},#{content},#{p_photo1name},#{p_photo2name},#{p_photo3name},#{p_photo4name} WHERE PRODUCTNO = #{productno}
+	</update>
+
+</mapper>

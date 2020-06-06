@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.home.mmember.mapper.MmemberMapper">
+
+	<select id="myPageDivision" resultType="String">
+    	SELECT D.DIVISIONNAME AS DIVISIONNAME,
+    	M.NAME AS NAME
+    	FROM MEMBER M LEFT OUTER JOIN DIVISION D ON M.DIVISION = D.DIVISION WHERE ID = #{id};
+	</select>
+
+	<select id="myPageName" resultType="String">
+		SELECT
+		M.NAME AS NAME,
+		D.DIVISIONNAME AS DIVISIONNAME
+    	FROM MEMBER M LEFT OUTER JOIN DIVISION D ON M.DIVISION = D.DIVISION WHERE ID = #{id};
+	</select>
+
+	<update id="memberDelete">
+		UPDATE MEMBER SET DIVISION = '99'
+		WHERE ID = #{id};
+	</update>
+
+	<select id="purchaseHistory" resultType="hashmap">
+		SELECT M.ID AS ID,
+        	O.ORDERSNO AS ORDERSNO,
+        	O.PRODUCTNO AS PRODUCTNO,
+        	O.SYS_DATE AS SYS_DATE,
+        	O.PNAME AS PNAME,
+        	O.QUANTITY AS QUANTITY,
+        	O.DELIVERY AS DELIVERY,
+        	O.P_PHOTO1NAME AS PHOTO1NAME,
+        	FORMAT(O.PRICE,0) AS PRICE
+        	FROM MEMBER M LEFT OUTER JOIN ORDERS O ON M.ID = O.ID WHERE M.ID = #{id};
+	</select>
+
+	<select id="reviewHistory" resultType="hashmap">
+		SELECT R.REVIEWNO AS REVIEWNO,
+	  R.PRODUCTNO AS PRODUCTNO,
+      P.PNAME AS PNAME,
+      R.CONTENTS AS CONTENTS,
+      R.SYS_DATE AS SYS_DATE,
+      R.RATING AS RATING
+      FROM REVIEW R JOIN PRODUCT P ON R.PRODUCTNO = P.PRODUCTNO
+      WHERE R.ID = #{id} ORDER BY REVIEWNO DESC;
+	</select>
+
+	<select id = "memberView" resultType="mmemberDto">
+		 SELECT
+		 ID as id,
+		 PHONE as phone,
+		 ADDRESS as address
+		 FROM MEMBER WHERE ID = #{id};
+	</select>
+
+	<update id= "updateMember">
+		UPDATE MEMBER SET PASSWORD = #{password}, PHONE = #{phone}, ADDRESS = #{fulladdress}
+		WHERE ID = #{id};
+	</update>
+
+	<update id= "salesUpdate">
+		UPDATE MEMBER SET CONFIRM = 1 WHERE ID = #{id};
+	</update>
+
+	<update id = "deliveryUpdate">
+		UPDATE ORDERS SET DELIVERY = 3
+		WHERE ORDERSNO = #{ordersno}
+	</update>
+
+	<insert id="myBookMark">
+		INSERT INTO PRODUCT_BOOKMARK (PRODUCTNO, ID) VALUES (#{productno},#{id})
+	</insert>
+
+</mapper>

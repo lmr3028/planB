@@ -1,0 +1,177 @@
+
+function addProductForm() {
+	location.href="addProductView";
+}
+
+// Class definition
+
+var KTDatatableRemoteAjaxDemo = function() {
+	// Private functions
+
+	// basic demo
+	var demo = function() {
+
+		var datatable = $('.kt-datatable').KTDatatable({
+			// datasource definition
+			data: {
+				type: 'remote',
+				source: {
+					read: {
+						url: '/admin/rest/product/myProductList',
+						map: function(raw) {
+							var dataSet = raw;
+							if (typeof raw.data !== 'undefined') {
+								dataSet = raw.data;
+							}
+							return dataSet;
+						},
+					},
+				},
+				pageSize: 10,
+				serverPaging: false,
+				serverFiltering: false,
+				serverSorting: false,
+			},
+
+			// layout definition
+			layout: {
+				scroll: true,
+				footer: false,
+			},
+
+			// column sorting
+			sortable: true,
+			pagination: true,
+
+			search: {
+				input: $('#generalSearch'),
+			},
+
+			// columns definition
+			columns: [
+				{
+				field: 'INDEX',
+				title: '#',
+				sortable: false,
+				width: 30,
+				type: 'number',
+				selector: {class: 'kt-checkbox--solid'},
+				textAlign: 'center',
+					template: function(row) {
+						return row.PRODUCTNO;
+					},
+				},
+				{
+					field: 'PRODUCTNO',
+					title : 'No',
+					width : '40',
+					sortable : 'desc',
+					type: 'number',
+				},
+				{
+					field: 'PNAME',
+					title: '상품명',
+					width: 'auto',
+				}, {
+					field: 'CATEGORYNAME',
+					title: '카테고리',
+					width: 'auto',
+				}, {
+					field: 'ID',
+					title: '판매자 아이디',
+					width: 'auto',
+				}, {
+					field: 'PRICE',
+					title: '가격',
+					width: 'auto',
+				},{
+					field: 'Actions',
+					title: 'Actions',
+					sortable: false,
+					width: 110,
+					overflow: 'visible',
+					autoHide: false,
+					template: function(row) {
+						return '\
+		                  <button data-product-no="' + row.PRODUCTNO + '" class="btn btn-sm btn-default btn-font-sm edit" title="Edit details">\
+		                      <i class="flaticon2-document"></i> Details\
+		                  </button>';
+					},
+				}],
+
+				// 한글 번역
+				translate: {
+					records: {
+						processing: '처리중...',
+						noRecords: '데이터가 없습니다.',
+					},
+					toolbar: {
+						pagination: {
+							items: {
+								default: {
+									first: '첫째',
+									prev: '이전',
+									next: '다음',
+									last: '마지막',
+									more: '더보기',
+									input: '입력',
+									select: '선택',
+								},
+//								info: '총 {{total}}중 {{start}} - {{end}} 표시중',
+							},
+						},
+					},
+				},
+		});
+	// 타입 셀렉박스가 변경됬을시 이벤트 발생
+    $('#kt_form_type').on('change', function() {
+      datatable.search($(this).val().toLowerCase(), 'CATEGORYNAME');
+    });
+
+    // 셀렉박스
+    $('#kt_form_type').selectpicker();
+
+    //modal 이벤트
+	datatable.on('dblclick', 'tr', function() {
+		$(this).find('.edit').click();
+//		modalSubRemoteDatatable($(this).data('record-id'));
+//		console.log(datatable.getRecord($(this)[0].dataset.row));
+//		$('#kt_modal_4').modal('show');
+	});
+
+	datatable.on('click', '.edit', function() {
+		var productNo = $(this).data('product-no');
+		$('#productNo').val(productNo);
+		$.ajax({
+	        url:  '/admin/rest/product/productView',
+	        type: 'POST',
+	        data: {productno : productNo},
+	        success: function(result) {
+	        	console.log(result);
+//	            $('#kt_modal_4 .modal-body p').html('test');
+	            $('#kt_modal_4').modal('show');
+	        },
+	        error: function(){
+	            alert("error");
+	        }
+	    });
+	});
+
+	datatable.on('click', '.delete', function() {
+		console.log($(this));
+	});
+
+
+	};
+
+	return {
+		// public functions
+		init: function() {
+			demo();
+		},
+	};
+}();
+
+jQuery(document).ready(function() {
+	KTDatatableRemoteAjaxDemo.init();
+});

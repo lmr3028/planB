@@ -1,0 +1,52 @@
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  servlet:
+      multipart:
+        enabled: true
+#        location: C:\tmp\
+        max-file-size: 100MB
+        max-request-size: 100MB
+  profiles:
+    include:
+    - database
+  jackson:
+#    serialization:
+#      fail-on-empty-beans: false
+    time-zone: Asia/Seoul
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: iciaplanb@gmail.com
+    password: 1q2w3e4r!!
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: true
+        mime:
+          charset: UTF-8
+        transport:
+          protocol: smtp
+server:
+  servlet:
+    session:
+      timeout: 10m
+#logging:
+#  config: classpath:config/log/logback-spring.xml
+  
+file:
+  path:
+    user: \web\images
+    notice: \web\images
+---
+server:
+  port: 8080

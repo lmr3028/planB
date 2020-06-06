@@ -1,0 +1,99 @@
+//
+//
+//jQuery(document).ready(function() { // 페이지가 로드됬을때 실행
+//
+//// 내가 가장 많이 판매한 상품 목록 Ajax
+//
+//var KTDatatableRemoteAjaxDemo = function() {
+//
+//	var demo = function() {
+//
+//		var datatable = $('.mypage_ti').KTDatatable({
+//			data: {
+//				type: 'remote',
+//				source: {
+//					read: {
+//						url: '/rest/home/mmember/myInformation',
+//						map: function(raw){
+//							var dataSet = raw;
+//							if (typeof raw.data !== 'undefined') {
+//								dataSet = raw.data;
+//							}
+//							return dataSet;
+//						},
+//					},
+//				},
+//				pageSize: 10,
+//				serverPaging: false,
+//				serverFiltering: false,
+//				serverSorting: false,
+//			},
+//
+//			layout: {
+//				scroll: true,
+//				footer: false,
+//			},
+//
+//			sortable: false,
+//			pagination: false,
+//
+//			search: {
+//				input: $('#generalSearch'),
+//			},
+//
+//			columns: [
+//				{
+//					field: 'DIVISION',
+//					title : '번호',
+//					width : 'auto',
+//					type: 'number',
+//				},
+//				{
+//					field: 'DIVISIONNAME',
+//					title: '회원 구분',
+//					width: 'auto',
+//				}, {
+//					field: 'NAME',
+//					title: '회원 이름',
+//					width: 'auto',
+//				}],
+//
+//				// 한글 번역
+//				translate: {
+//					records: {
+//						processing: '처리중...',
+//						noRecords: '데이터가 없습니다.',
+//					},
+//					toolbar: {
+//						pagination: {
+//							items: {
+//								default: {
+//									first: '첫째',
+//									prev: '이전',
+//									next: '다음',
+//									last: '마지막',
+//									more: '더보기',
+//									input: '입력',
+//									select: '선택',
+//								},
+////								info: '총 {{total}}중 {{start}} - {{end}} 표시중',
+//							},
+//						},
+//					},
+//				},
+//
+//		});
+//	};
+//
+//	return {
+//		// public functions
+//		init: function() {
+//			demo();
+//		},
+//	};
+//}();
+//
+//jQuery(document).ready(function() {
+//	KTDatatableRemoteAjaxDemo.init();
+//});
+//});

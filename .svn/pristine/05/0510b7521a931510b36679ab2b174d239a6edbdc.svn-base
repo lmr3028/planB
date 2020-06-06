@@ -1,0 +1,17 @@
+package com.pioneer.developer.home.orders.service;
+
+import org.springframework.stereotype.Service;
+
+import com.pioneer.developer.home.orders.mapper.OrdersMapper;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@Service("ordersService")
+public class OrdersServiceImpl {
+
+	private final OrdersMapper ordersMapper;
+
+}

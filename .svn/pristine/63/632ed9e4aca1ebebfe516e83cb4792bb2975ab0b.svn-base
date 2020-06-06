@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.seller.product.mapper.ProductMapper">
+
+	<insert id="addProduct">
+		INSERT INTO PRODUCT (ID,PNAME,PRICE,CATEGORYNO,SIMPLECONTENT,CONTENT,P_PHOTO1NAME,P_PHOTO2NAME,P_PHOTO3NAME,P_PHOTO4NAME)
+			VALUES(#{id},#{pname},#{price},#{categoryno},#{simplecontent},#{content},#{p_photo1name},#{p_photo2name},#{p_photo3name},#{p_photo4name})
+	</insert>
+
+	<select id="myProductList" resultType="hashmap">
+		SELECT
+		P.PRODUCTNO as PRODUCTNO,
+		P.PNAME as PNAME,
+		P.PRICE as PRICE,
+		C.CATEGORYNAME as CATEGORYNAME,
+		P.USEYN as USEYN,
+		AVG(R.RATING) as AVGRATING
+		FROM
+		PRODUCT P
+		LEFT JOIN CATEGORY C ON P.CATEGORYNO = C.CATEGORYNO
+		LEFT JOIN REVIEW R ON P.PRODUCTNO = R.PRODUCTNO WHERE P.ID = #{id} GROUP BY P.PRODUCTNO
+	</select>
+
+ 	<update id="productUpdateStatus">
+		UPDATE PRODUCT
+		SET USEYN = #{useYn}
+		WHERE PRODUCTNO = #{productno}
+	</update>
+
+	<select id="productView" parameterType="int" resultType="productDto">
+		SELECT
+		P.PRODUCTNO AS PRODUCTNO,
+		P.PNAME AS PNAME,
+		P.PRICE AS PRICE,
+		P.CATEGORYNO AS CATEGORYNO,
+		C.CATEGORYNAME AS CATEGORYNAME,
+		P.SIMPLECONTENT AS SIMPLECONTENT,
+		P.CONTENT AS CONTENT,
+		P.P_PHOTO1NAME AS P_PHOTO1NAME,
+		P.P_PHOTO2NAME AS P_PHOTO2NAME,
+		P.P_PHOTO3NAME AS P_PHOTO3NAME,
+		P.P_PHOTO4NAME AS P_PHOTO4NAME,
+		AVG(R.RATING) AS RATING,
+		COUNT(R.REVIEWNO) AS CNTREVIEWNO
+		FROM
+		PRODUCT P
+		LEFT JOIN CATEGORY C ON P.CATEGORYNO = C.CATEGORYNO
+		LEFT JOIN REVIEW R ON P.PRODUCTNO = R.PRODUCTNO WHERE P.PRODUCTNO = #{productno} GROUP BY P.PRODUCTNO ;
+	</select>
+
+	<update id="productUpdate" parameterType="productDto">
+		UPDATE PRODUCT SET
+			 PNAME = #{pname}
+			,PRICE = #{price}
+			,CATEGORYNO = #{categoryno}
+			,SIMPLECONTENT = #{simplecontent}
+		WHERE PRODUCTNO = #{productno} AND ID = #{id}
+	</update>
+<!-- 	<select id="productRating" resultType="int">
+		SELECT CAST(ROUND(AVG(R.RATING), 2) AS CHAR(3)) AS aRATING FROM REVIEW R LEFT OUTER JOIN PRODUCT P ON R.PRODUCTNO = P.PRODUCTNO WHERE R.PRODUCTNO = #[productno];
+	</select> -->
+
+</mapper>

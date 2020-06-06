@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.review.answer.mapper.ReviewAnswerMapper">
+
+	<!-- 로그인 ID 중복가입 확인  -->
+	<select id="confirmLoginId" resultType="int">
+		SELECT	COUNT(*)
+		FROM	PTY_CSTMR_BAS
+		WHERE	CSTMR_STATUS_CD != '99'
+		AND		CSTMR_DIV_CD = 'MEMBER'
+		AND		LOGIN_ID	= #{loginId}
+	</select>
+
+</mapper>

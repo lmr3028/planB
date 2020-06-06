@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.home.mmember.mapper.MmemberMapper">
+
+	<select id="myPageDivision" resultType="String">
+    	SELECT D.DIVISIONNAME AS DIVISIONNAME,
+    	M.NAME AS NAME
+    	FROM MEMBER M LEFT OUTER JOIN DIVISION D ON M.DIVISION = D.DIVISION WHERE ID = #{id};
+	</select>
+
+	<select id="myPageName" resultType="String">
+		SELECT
+		M.NAME AS NAME,
+		D.DIVISIONNAME AS DIVISIONNAME
+    	FROM MEMBER M LEFT OUTER JOIN DIVISION D ON M.DIVISION = D.DIVISION WHERE ID = #{id};
+	</select>
+
+	<update id="memberDelete">
+		UPDATE MEMBER SET DIVISION = '99'
+		WHERE ID = #{id};
+	</update>
+
+	<select id="purchaseHistory" resultType="hashmap">
+		SELECT M.ID AS ID,
+        O.ORDERSNO AS ORDERSNO,
+        O.SYS_DATE AS SYS_DATE,
+        O.PNAME AS PNAME,
+        O.QUANTITY AS QUANTITY,
+        O.P_PHOTO1NAME AS PHOTO1NAME,
+        O.PRICE AS PRICE
+        FROM MEMBER M LEFT OUTER JOIN ORDERS O ON M.ID = O.ID WHERE M.ID = #{id};
+	</select>
+
+</mapper>

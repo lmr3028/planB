@@ -1,0 +1,29 @@
+package com.pioneer.developer.seller.sellermain.mapper;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+
+@Mapper
+public interface SellerMainMapper {
+
+	List<Map<?, ?>> getGraph4Data(String id);
+
+	List<Map<?, ?>> getGraph3Data(String sales_id);
+
+	List<Map<?, ?>> myProductList(String sales_id);
+
+	List<Map<?, ?>> myProductReview(String id);
+
+	int myProductCount(String sales_id);
+
+	String myProductPrice(String sales_id);
+
+	String myProductRating(String id);
+
+	int myProductListCount(String id);
+
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.home.cart.mapper.CartMapper">
+
+ 	<select id="myCartList" resultType="hashmap">
+		SELECT
+        	C.ID AS ID,
+        	P.PRODUCTNO,
+        	P.P_PHOTO1NAME AS PHOTO1NAME,
+        	P.PNAME AS PNAME,
+        	SUM(C.QUANTITY) AS QUANTITY,
+        	FORMAT((SUM(C.QUANTITY) * C.PRICE), 0) AS PRICE
+        	FROM CART C LEFT OUTER JOIN PRODUCT P ON C.PRODUCTNO = P.PRODUCTNO WHERE C.ID = #{id} AND APPROVAL = 0 GROUP BY C.PRODUCTNO, C.PRICE;
+	</select>
+
+	<insert id="cartAdd">
+		INSERT INTO CART (PRODUCTNO, ID, QUANTITY, PRICE, APPROVAL)VALUES
+		(#{productno}, #{id}, #{quantity}, #{price}, 0)
+	</insert>
+
+	<delete id="myCartDelete">
+		DELETE FROM CART WHERE PRODUCTNO = #{productno}
+	</delete>
+
+<!-- 	<delete id="cartDelete"> 구매하기 끝날 시 카트 목록 삭제?
+		DELETE FROM CART WHERE ID = #{id}
+	</delete> -->
+
+
+
+</mapper>

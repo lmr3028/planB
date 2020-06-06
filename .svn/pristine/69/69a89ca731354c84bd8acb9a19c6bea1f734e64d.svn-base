@@ -1,0 +1,10 @@
+package com.pioneer.developer.seller.sellermain.service;
+
+import java.util.List;
+import java.util.Map;
+
+public interface SellerMainService {
+
+	List<Map<?, ?>> getGraph1Data();
+
+}

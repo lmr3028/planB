@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.member.report.mapper.MemberReportMapper">
+
+	<select id="reportList" resultType="hashmap">
+		SELECT * FROM REPORT R LEFT OUTER JOIN REPORT_CATEGORY C ON R.CATEGORYNO = C.CATEGORYNO
+	</select>
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.sys.aproduct.mapper.AProductMapper">
+
+	<select id="sysProductList" resultType="hashmap">
+		SELECT
+        P.PRODUCTNO AS PRODUCTNO,
+		P.PNAME AS PNAME,
+		C.CATEGORYNAME AS CATEGORYNAME,
+		P.ID AS ID,
+		FORMAT((P.PRICE), 0) AS PRICE
+		FROM PRODUCT P LEFT OUTER JOIN CATEGORY C ON P.CATEGORYNO = C.CATEGORYNO
+	</select>
+
+	<select id="sysOrdersList" resultType="hashmap">
+		SELECT
+		O.ORDERSNO as ORDERSNO,
+		O.PNAME as PNAME ,
+		O.SALES_ID as SALES_ID,
+		O.SYS_DATE as SYS_DATE,
+		FORMAT((O.QUANTITY*O.PRICE), 0) AS SUMPRICE,
+		O.DELIVERY as DELIVERY
+		FROM ORDERS O
+		INNER JOIN PRODUCT P ON O.PRODUCTNO = P.PRODUCTNO
+	</select>
+
+</mapper>

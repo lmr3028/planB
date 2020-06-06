@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pioneer.developer.sys.notice.mapper.NoticeMapper">
+
+	<insert id="addNotice">
+		INSERT INTO NOTICE
+		(ID,TITLE,CONTENT,SYS_DATE,NOTICE_FILENAME,USE_YN, CATEGORYNO)
+		VALUES(#{id},#{title},#{content},NOW(),#{notice_filename},'N', #{categoryno});
+	</insert>
+
+	<select id="noticeList" resultType="hashmap">
+		SELECT N.*, C.CATEGORYNAME FROM NOTICE N
+		JOIN CATEGORY C ON C.CATEGORYNO = N.CATEGORYNO
+		ORDER BY NOTICENO DESC;
+	</select>
+
+	<select id="noticeView" parameterType="Integer"	resultType="noticeWriteDto">
+		SELECT *
+		 FROM NOTICE
+		 WHERE NOTICENO = #{noticeno}
+	</select>
+
+	<update id="noticeUpdateStatus">
+		UPDATE NOTICE
+		SET USE_YN = #{use_yn}
+		WHERE NOTICENO =
+		#{noticeno}
+	</update>
+
+	<update id="updateNotice" parameterType="noticeWriteDto">
+		UPDATE NOTICE SET
+		TITLE = 	#{title},
+		CONTENT = #{content},
+		CATEGORYNO = #{categoryno}
+		WHERE NOTICENO = #{noticeno}
+	</update>
+
+	<select id="noticeEventList" resultType="hashmap">
+		SELECT * FROM NOTICE_EVENT ORDER BY EVENTNO DESC;
+	</select>
+
+	<select id="eventSelect" resultType="noticeEventDto">
+		SELECT ID, NAME FROM NOTICE_EVENT ORDER BY RAND() LIMIT 1;
+	</select>
+
+</mapper>

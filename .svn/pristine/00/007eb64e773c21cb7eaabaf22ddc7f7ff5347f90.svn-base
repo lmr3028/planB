@@ -1,0 +1,12 @@
+package com.pioneer.developer.sys.amember.service;
+
+import java.util.List;
+
+import com.pioneer.developer.sys.amember.model.AmemberDto;
+
+
+public interface AmemberService {
+
+	List<AmemberDto> memberList();
+
+}

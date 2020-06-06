@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.member.login.mapper.MemberLoginMapper">
+
+	<!-- 로그인 -->
+	<select id="login" resultType="memberLoginDto">
+		SELECT	ID, DIVISION, CONFIRM, NAME
+		FROM	MEMBER
+		WHERE ID = #{id}
+		AND	PASSWORD = #{password}
+	</select>
+
+	<select id="loadUserByUsername" resultType="memberLoginDto">
+		SELECT	ID, PASSWORD, DIVISION, CONFIRM, NAME
+		FROM	MEMBER
+		WHERE ID = #{id}
+	</select>
+</mapper>

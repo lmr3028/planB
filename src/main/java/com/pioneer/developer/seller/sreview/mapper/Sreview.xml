@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.seller.sreview.mapper.SreviewMapper">
+
+	<select id="sreviewList" resultType="hashMap">
+		SELECT R.REVIEWNO, R.PRODUCTNO, R.ID, R.CONTENTS, R.SYS_DATE, R.RATING
+		FROM REVIEW R JOIN PRODUCT P ON R.PRODUCTNO = P.PRODUCTNO
+		WHERE P.ID = #{id}  ORDER BY SYS_DATE DESC
+	</select>
+
+</mapper>

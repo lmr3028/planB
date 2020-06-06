@@ -1,0 +1,14 @@
+package com.pioneer.developer.admin.seller.product.model;
+
+import org.apache.ibatis.type.Alias;
+
+
+import lombok.Data;
+
+@Data
+@Alias("productTempDto")
+public class ProductTempDto {
+	private int productno;
+	private String option;
+	private int addprice;
+}

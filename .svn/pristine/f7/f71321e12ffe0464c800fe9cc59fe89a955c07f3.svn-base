@@ -1,0 +1,365 @@
+
+
+// Class Definition
+var KTLoginGeneral = function() {
+
+    var login = $('#kt_login');
+
+    var showErrorMsg = function(form, type, msg) {
+        var alert = $('<div class="alert alert-' + type + ' alert-dismissible" role="alert">\
+			<div class="alert-text">'+msg+'</div>\
+			<div class="alert-close">\
+                <i class="flaticon2-cross kt-icon-sm" data-dismiss="alert"></i>\
+            </div>\
+		</div>');
+
+        form.find('.alert').remove();
+        alert.prependTo(form);
+        //alert.animateClass('fadeIn animated');
+        KTUtil.animateClass(alert[0], 'fadeIn animated');
+        alert.find('span').html(msg);
+    }
+
+    // Private Functions
+    var displaySignUpForm = function() {
+        login.removeClass('kt-login--forgot');
+        login.removeClass('kt-login--signin');
+
+        login.addClass('kt-login--signup');
+        KTUtil.animateClass(login.find('.kt-login__signup')[0], 'flipInX animated');
+    }
+
+    var displaySignInForm = function() {
+        login.removeClass('kt-login--forgot');
+        login.removeClass('kt-login--signup');
+
+        login.addClass('kt-login--signin');
+        KTUtil.animateClass(login.find('.kt-login__signin')[0], 'flipInX animated');
+        //login.find('.kt-login__signin').animateClass('flipInX animated');
+    }
+
+    var displayForgotForm = function() {
+        login.removeClass('kt-login--signin');
+        login.removeClass('kt-login--signup');
+
+        login.addClass('kt-login--forgot');
+        //login.find('.kt-login--forgot').animateClass('flipInX animated');
+        KTUtil.animateClass(login.find('.kt-login__forgot')[0], 'flipInX animated');
+
+    }
+
+    var handleFormSwitch = function() {
+        $('#kt_login_forgot').click(function(e) {
+            e.preventDefault();
+            displayForgotForm();
+        });
+
+        $('#kt_login_forgot_cancel').click(function(e) {
+            e.preventDefault();
+            displaySignInForm();
+        });
+
+        $('#kt_login_signup').click(function(e) {
+            e.preventDefault();
+            displaySignUpForm();
+        });
+
+        $('#kt_login_signup_cancel').click(function(e) {
+            e.preventDefault();
+            displaySignInForm();
+        });
+    }
+
+    var handleSignInFormSubmit = function() {
+        $('#kt_login_signin_submit').click(function(e) {
+            e.preventDefault();
+            var btn = $(this);
+            var form = $(this).closest('form');
+
+            form.validate({
+                rules: {
+                    id: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true
+                    }
+                }, messages:{
+                	id:{
+                		required : "아이디를 입력하세오.",
+                		email: "아이디는 메일 형식으로 입력하세요."
+                	},
+                	password: {
+                		required : "비밀번호를 입력하세요.",
+                	}
+                }
+            });
+
+            if (!form.valid()) {
+                return;
+            }
+
+            btn.addClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', true);
+
+            form.ajaxSubmit({
+            	async: true,
+                url: '/rest/member/login/signin',
+                type: 'post',
+                success: function(response, status, xhr, $form) {
+	                    btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
+	                    console.log("success");
+	                    console.log(response);
+
+	                    var hostname = window.location.protocol + "//" + window.location.host;
+	                    var url = "";
+	                    if(response.division=='1') {
+	                    	url = hostname;
+	                    } else if(response.division=='2') {
+	                    	url = hostname + "/admin/product/addProductView";
+	                    } else if(response.division=='3') {
+	                    	alert("해당 아이디로는 접속이 불가합니다.")
+	                    	url = hostname + "/member/join/loginSignUp";
+	                    } else if(response.division=='0'){
+	                    	url = hostname + "/sys/main/main";
+	                    } else{
+	                    	alert("아이디 또는 비밀번호가 틀렸습니다.")
+	                    	url = hostname + "/member/join/loginSignUp";
+	                    }
+	                    console.log(url);
+	                    window.location.href = url;
+                },
+                error: function(response){
+                    alert("에러가 발생했습니다.")
+                }
+            });
+        });
+    }
+
+    var handleSignUpFormSubmit = function() {
+        $('#kt_login_signup_submit').click(function(e) {
+            e.preventDefault();
+
+            var btn = $(this);
+            var form = $(this).closest('form');
+
+            form.validate({
+            	 onfocusout: function(element) {
+            	        // "eager" validation
+            		 console.log(element)
+            	        this.element(element);
+            	    },
+                rules: {
+                    id: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                    	required: true,
+                    	passwordCk: true,
+                    },
+                    rpassword: {
+                    	required: true,
+                    	equalTo : "#password"
+                    },
+                    name: {
+                    	required: true
+                    },
+                    birth: {
+                    	required: true
+                    },
+                    address1: {
+                    	required: true
+                    },
+                    address2: {
+                    	required: true
+                    },
+                    address3: {
+                    	required: true
+                    },
+                    address4: {
+                    	required: true
+                    },
+                    phone: {
+                    	required: true
+                    },
+                    agree: {
+                        required: true
+                    }
+
+                }, messages:{
+                	id:{
+                		required : "아이디를 입력하세요.",
+                		email: "아이디는 메일 형식으로 입력하세요."
+                	},
+                	password: {
+                		required : "비밀번호를 입력하세요.",
+                		passwordCk : "비밀번호는 8~16자리 대소문자, 숫자, 특수문자 조합으로 입력하세요."
+                	},
+                	rpassword:{
+                		required : "비밀번호 확인을 입력하세요.",
+                		equalTo: "비밀번호가 일치하지 않습니다."
+                	},
+                	name:{
+                		required : "이름을 입력하세요."
+                	},
+                	birth:{
+                		required : "생년월일을 입력하세요."
+                	},
+                	address1:{
+                		required : "주소를 입력하세요."
+                	},
+                	address2:{
+                		required : "주소를 입력하세요."
+                	},
+                	address3:{
+                		required : "주소를 입력하세요."
+                	},
+                	address4:{
+                		required : "주소를 입력하세요."
+                	},
+                	phone:{
+                		required : "휴대폰번호를 입력하세요.",
+                		phone: "올바른 형식(예: 010-0000-0000)으로 입력해 주세요."
+                	},
+                	agree:{
+                		required : "약관에 동의하세요."
+                	}
+
+                },
+            });
+
+            $.validator.addMethod("passwordCk",  function( value, element ) {
+            	   return this.optional(element) ||  /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value);
+            });
+
+
+//            $.validator.addMethod("phone",  function( value, element ) {
+//            	return this.optional(element) ||  /^(?([0-9]{3})\)?([ .-]?)([0-9]{4})\2([0-9]{4})/.test(value);
+//         	});
+
+            if (!form.valid()) {
+                return;
+            }
+
+            btn.addClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', true);
+
+            form.ajaxSubmit({
+                url: '/member/join/signup',
+                success: function(response, status, xhr, $form) {
+                	// similate 2s delay
+                	setTimeout(function() {
+	                    btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
+	                    form.clearForm();
+	                    form.validate().resetForm();
+
+	                    // display signup form
+	                    displaySignInForm();
+	                    var signInForm = login.find('.kt-login__signin form');
+	                    signInForm.clearForm();
+	                    signInForm.validate().resetForm();
+
+	                    showErrorMsg(signInForm, 'success', 'Thank you. To complete your registration please check your email.');
+	                }, 2000);
+                }
+            });
+        });
+    }
+
+    var handleForgotFormSubmit = function() {
+        $('#kt_login_forgot_submit').click(function(e) {
+            e.preventDefault();
+
+            var btn = $(this);
+            var form = $(this).closest('form');
+
+            form.validate({
+                rules: {
+                    id: {
+                        required: true,
+                        email: true
+                    }
+            }, messages:{
+                    	id:{
+                    		required : "아이디를 입력하세요.",
+                    		email: "아이디는 메일 형식으로 입력하세요."
+                    	}
+                    }
+            });
+
+            if (!form.valid()) {
+                return;
+            }
+
+            btn.addClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', true);
+
+            form.ajaxSubmit({
+                url: '',
+                success: function(response, status, xhr, $form) {
+                	// similate 2s delay
+                	setTimeout(function() {
+                		btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false); // remove
+	                    form.clearForm(); // clear form
+	                    form.validate().resetForm(); // reset validation states
+
+	                    // display signup form
+	                    displaySignInForm();
+	                    var signInForm = login.find('.kt-login__signin form');
+	                    signInForm.clearForm();
+	                    signInForm.validate().resetForm();
+
+	                    showErrorMsg(signInForm, 'success', 'Cool! Password recovery instruction has been sent to your email.');
+                	}, 2000);
+                }
+            });
+        });
+    }
+
+    // Public Functions
+    return {
+        // public functions
+        init: function() {
+            handleFormSwitch();
+            handleSignInFormSubmit();
+            handleSignUpFormSubmit();
+            handleForgotFormSubmit();
+        }
+    };
+}();
+
+// Class Initialization
+jQuery(document).ready(function() {
+    KTLoginGeneral.init();
+});
+
+
+// 정규식 키 입력시, 반응 https://validatejs.org/examples.html / 검색 :
+//var constraints = {
+//		  id: {
+//		    presence: true,
+//		    email: true
+//		  },
+//		  password: {
+//		    presence: true,
+//		    length: {
+//              minimum: 8,
+//              maximum: 16
+//		      pattern: /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
+//		      message: "비밀번호는 8~16자리 대소문자, 숫자, 특수문자 조합으로 입력하세요."
+//		    },
+//		  rpassword:{
+//			  presence: true,
+//	          equality: {
+//	              attribute: "password",
+//	              message: "^비밀번호가 일치하지 않습니다."
+//	            }
+//		  },
+//          name: {
+//        	  presence: true
+//          },
+//
+//
+//
+//
+//		  }
+//		};

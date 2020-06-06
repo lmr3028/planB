@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.home.orders.mapper.OrdersMapper">
+
+	<insert id="ordersAdd">
+		INSERT INTO ORDERS (PRODUCTNO, ID, SALES_ID, SYS_DATE, PNAME, QUANTITY, PRICE)VALUES
+		(#{productno}, #{id}, #{sales_id}, NOW(), #{pname}, #{quantity}, #{price})
+	</insert>
+
+	<select id = "memberInfo" resultType="mmemberDto">
+		 SELECT
+		 M.ID as id,
+		 M.NAME as name,
+		 D.DIVISIONNAME AS divisionname,
+		 M.PHONE as phone,
+		 M.ADDRESS as address
+		 FROM MEMBER M INNER JOIN DIVISION D ON M.DIVISION = D.DIVISION WHERE ID = #{id};
+	</select>
+
+</mapper>

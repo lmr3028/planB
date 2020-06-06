@@ -1,0 +1,24 @@
+package com.pioneer.developer.seller.product.service;
+
+import java.util.List;
+
+import com.pioneer.developer.seller.product.model.ProductDto;
+
+public interface ProductService {
+
+	// 상품 등록
+	void addProduct(ProductDto productDto) throws Exception;
+
+	// 상품 목록 조회
+	List<ProductDto> myProductList();
+
+	// 상품 삭제
+	void productDelete(List<Integer> productno);
+
+	// 상품 상세 조회
+	ProductDto productView(int productno);
+
+	// 상품 수정
+	void productUpdate(int productno, String id);
+
+}

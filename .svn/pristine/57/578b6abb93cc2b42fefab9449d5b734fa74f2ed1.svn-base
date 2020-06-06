@@ -1,0 +1,16 @@
+package com.pioneer.developer.seller.sellermain.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+
+@Mapper
+public interface SellerMainMapper {
+
+	List<Map<?, ?>> getGraph4Data(String id);
+
+	List<Map<?, ?>> getGraph2Data();
+
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.sys.sysmain.mapper.SysMainMapper">
+
+	<select id="getGraph1Data" resultType="hashMap">
+			SELECT C.CATEGORYNAME AS categoryname,
+			COUNT(*) as count
+			FROM PRODUCT P LEFT OUTER JOIN CATEGORY C ON
+			P.CATEGORYNO = C.CATEGORYNO
+			GROUP BY P.CATEGORYNO
+	</select>
+
+	<select id="getGraph4Data" resultType="java.util.LinkedHashMap">
+			SELECT
+			COUNT(CASE WHEN CNT.rat BETWEEN 0.0 AND 0.9 THEN 1 END) as zero,
+			COUNT(CASE WHEN CNT.rat BETWEEN 1.0 AND 1.9 THEN 1 END) as one,
+			COUNT(CASE WHEN CNT.rat BETWEEN 2.0 AND 2.9 THEN 1 END) as two,
+			COUNT(CASE WHEN CNT.rat BETWEEN 3.0 AND 3.9 THEN 1 END) as three,
+			COUNT(CASE WHEN CNT.rat BETWEEN 4.0 AND 4.9 THEN 1 END) as four,
+			COUNT(CASE WHEN CNT.rat = 5.0 THEN 1 END) as five
+			FROM (SELECT DISTINCT PRODUCTNO, AVG(RATING) as rat FROM REVIEW GROUP BY PRODUCTNO HAVING AVG(RATING)) CNT
+	</select>
+
+	<select id="getGraph3Data" resultType="hashMap">
+		SELECT DATE_FORMAT(DATE(SYS_DATE), "%m / %d")  AS date,
+		COUNT(*) as count
+		FROM MEMBER GROUP BY SYS_DATE HAVING DATE(SYS_DATE) >= DATE_SUB(NOW(), INTERVAL 14 DAY)
+	</select>
+
+	<select id="getGraph2Data" resultType="hashMap">
+		SELECT
+		C.CATEGORYNAME as categoryname,
+		COUNT(*) as count
+		FROM ORDERS O JOIN PRODUCT P ON O.PRODUCTNO = P.PRODUCTNO JOIN CATEGORY C ON P.CATEGORYNO = C.CATEGORYNO GROUP BY C.CATEGORYNAME
+	</select>
+
+	<select id="sysCount" resultType="hashMap">
+		SELECT
+		COUNT(*) AS count
+		FROM MEMBER WHERE SYS_DATE = CURDATE() GROUP BY SYS_DATE
+	</select>
+
+	<select id="getTodayMemberCount" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE SYS_DATE = CURDATE()
+	</select>
+
+	<select id="getTodayOrderCount" resultType="int">
+		SELECT COUNT(*) FROM ORDERS WHERE SYS_DATE = CURDATE()
+	</select>
+
+	<select id="getTodayReportCount" resultType="int">
+		SELECT COUNT(*) FROM REPORT WHERE SYS_DATE = CURDATE()
+	</select>
+
+	<select id="getTodaySalesPrice" resultType="String">
+		SELECT FORMAT(SUM(QUANTITY*PRICE), 0) FROM ORDERS WHERE SYS_DATE = CURDATE()
+	</select>
+
+</mapper>

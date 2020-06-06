@@ -1,0 +1,188 @@
+const primary = "#6993FF", success = "#1BC5BD", info = "#8950FC", warning = "#FFA800", danger = "#F64E60";
+
+
+jQuery(document).ready(function() { // 페이지가 로드됬을때 실행
+
+		// chart_4
+
+    var chart4Labels = []; // 차트4 라벨 담을곳
+    var chart4Data = []; // 차트4 데이터 담을곳
+
+    // 차트4 데이터 서버로 부터 가져오기
+    $.getJSON("/rest/seller/main/graph4", function(data) { // AJAX 통신 성공시
+   	 console.log(data);
+   	 console.log(Object.keys(data[0]));
+        $.each(data, function(key, value) { // 반복문
+        	chart4Data.push(value.zero);
+        	chart4Data.push(value.one);
+        	chart4Data.push(value.two);
+        	chart4Data.push(value.three);
+        	chart4Data.push(value.four);
+            chart4Data.push(value.five);
+        });
+
+		var chart_4 = {
+			series : [ {
+				name : 'Servings',
+				data : chart4Data
+			} ],
+			annotations : {
+				points : [ {
+					x : 'Bananas',
+					seriesIndex : 0,
+					label : {
+						borderColor : '#775DD0',
+						offsetY : 0,
+						style : {
+						color : '#fff',
+						background : '#775DD0',
+					},
+					text : 'Bananas are good',
+				}
+			} ]
+		},
+		chart : {
+			height : 350,
+			type : 'bar',
+		},
+		plotOptions : {
+			bar : {
+				columnWidth : '30%',
+				endingShape : 'rounded'
+			}
+		},
+		dataLabels : {
+			enabled : true
+		},
+		stroke : {
+			width : 2
+		},
+
+		grid : {
+			row : {
+				colors : [ '#fff', '#f2f2f2' ]
+			}
+		},
+		xaxis : {
+			labels : {
+				rotate : -45
+			},
+			categories : chart4Labels,
+			tickPlacement : 'on'
+		},
+		yaxis : {
+			title : {
+				text : 'Servings',
+			},
+		},
+		fill : {
+			type : 'gradient',
+			gradient : {
+				shade : 'light',
+				type : "horizontal",
+				shadeIntensity : 0.25,
+				gradientToColors : undefined,
+				inverseColors : true,
+				opacityFrom : 0.85,
+				opacityTo : 0.85,
+				stops : [ 50, 0, 100 ]
+			},
+		}
+	};
+
+		var chart4 = new ApexCharts(document.querySelector("#chart_4"), chart_4); // chart4 생성
+		chart4.render(); // chart4 그리기
+    				}).fail(function(jqXHR, textStatus, errorThrown) { // 실패시
+    	})
+
+
+	var chart2Labels = [];
+	var chart2Date = [];
+
+	$.getJSON("/rest/seller/main/graph2", function(data) { // AJAX 통신 성공시
+   	 console.log(data);
+     $.each(data, function(key, value) { // 반복문
+         char2Labels.push(value.date);
+     });
+
+     var chart_2 = {
+        series: [{
+        data: data.slice()
+      }],
+        chart: {
+        id: 'realtime',
+        height: 350,
+        type: 'line',
+        animations: {
+          enabled: true,
+          easing: 'linear',
+          dynamicAnimation: {
+            speed: 1000
+          }
+        },
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      title: {
+        text: 'Dynamic Updating Chart',
+        align: 'left'
+      },
+      markers: {
+        size: 0
+      },
+      xaxis: {
+        type: 'datetime',
+        range: XAXISRANGE,
+      },
+      yaxis: {
+        max: 100
+      },
+      legend: {
+        show: false
+      },
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart"), options);
+      chart.render();
+
+
+      window.setInterval(function () {
+      getNewSeries(lastDate, {
+        min: 10,
+        max: 90
+      })
+
+      chart.updateSeries([{
+        data: data
+      }])
+    }, 1000)
+
+	var chart2 = new ApexCharts(document.querySelector("#chart_2"), chart_2); // chart4 생성
+		chart2.render(); // chart4 그리기
+  				}).fail(function(jqXHR, textStatus, errorThrown) { // 실패시
+  	});
+
+
+
+/*	//하위 - 샘플 데이터로 구성된 차트들 작업필요
+	var chart2 = new ApexCharts(document.querySelector("#chart_2"), chart_2);
+	var chart4 = new ApexCharts(document.querySelector("#chart_4"), chart_4);
+	chart2.render();
+	chart4.render();
+*/
+});
+
+
+
+
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.admin.sys.notice.mapper.NoticeMapper">
+
+	<insert id="addNotice">
+		INSERT INTO NOTICE (ID,TITLE,CONTENT,SYS_DATE,NOTICE_FILENAME,USE_YN)
+			VALUES(#{id},#{title},#{content},NOW(),#{notice_filename},'N');
+	</insert>
+
+	<select id="noticeList" resultType="hashmap">
+		SELECT * FROM NOTICE ORDER BY NOTICENO DESC
+	</select>
+
+</mapper>

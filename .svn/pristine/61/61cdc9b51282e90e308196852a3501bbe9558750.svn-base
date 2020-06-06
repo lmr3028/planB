@@ -1,0 +1,97 @@
+package com.pioneer.developer.seller.product.service;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.pioneer.developer.seller.product.mapper.ProductMapper;
+import com.pioneer.developer.seller.product.model.ProductDto;
+
+import lombok.RequiredArgsConstructor;
+
+/**
+ * *********************************************************************************
+ * @PROJECT			: PlanB 쇼핑몰 구축
+ * @PROGRAMID		: ProductServiceImpl.java
+ * @DESCRIPTION 	: 상품 관리 서비스
+ * @AUTHOR			: 김성우
+ * @CREATEDDATE 	: 2020. 05. 09
+ * HISTORY
+ * =================================================================================
+ * DATE                       NAME                  DESCRIPTION
+ * ---------------------------------------------------------------------------------
+ * 2020. 05. 09             김성우               First Generated
+ * *********************************************************************************
+ */
+@RequiredArgsConstructor
+@Service
+public class ProductServiceImpl implements ProductService {
+
+	@Value("${file.path.user}")
+	private String savePath;
+
+	private final ProductMapper productMapper;
+
+	@Override
+	public void addProduct(ProductDto productDto) throws Exception {
+		MultipartFile mainImg = productDto.getMainImg();
+
+		if (!mainImg.isEmpty()) {
+			mainImg.transferTo(new File(savePath + mainImg.getOriginalFilename()));
+			productDto.setP_photo1name(mainImg.getOriginalFilename());
+		}
+
+		MultipartFile[] subImg = productDto.getSubImg();
+
+		int cnt = 0;
+		for (MultipartFile multipartFile : subImg) {
+			multipartFile.transferTo(new File(savePath + multipartFile.getOriginalFilename()));
+
+			if (cnt == 0) {
+				productDto.setP_photo2name(multipartFile.getOriginalFilename());
+			} else if (cnt == 1) {
+				productDto.setP_photo3name(multipartFile.getOriginalFilename());
+			} else if (cnt == 2) {
+				productDto.setP_photo4name(multipartFile.getOriginalFilename());
+			}
+
+			cnt++;
+		}
+
+		productMapper.addProduct(productDto);
+	}
+
+	@Override
+	public List<ProductDto> myProductList(String id) {
+		return productMapper.myProductList(id);
+	}
+
+	@Override
+	public int productUpdateStatus(Integer[] productno, String useYn) {
+		int count = 0;
+		for (int i = 0; i < productno.length; i++) {
+			count += productMapper.productUpdateStatus(productno[i], useYn);
+		}
+		return count;
+	}
+
+	@Override
+	public ProductDto productView(int productno) {
+		return productMapper.productView(productno);
+	}
+
+	@Override
+	public int productUpdate(ProductDto productDto) {
+		return productMapper.productUpdate(productDto);
+	}
+
+	@Override
+	public List<Map<?, ?>> myProductReviewList(String id) {
+		return productMapper.myProductReviewList(id);
+	}
+
+}

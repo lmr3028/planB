@@ -1,0 +1,22 @@
+package com.pioneer.developer.seller.sellermain.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
+@RequiredArgsConstructor
+@Controller
+@RequestMapping("/seller/main/")
+public class SellerMainController {
+
+	//등록 화면 이동
+	@RequestMapping("view")
+	public String mainView() {
+		return "/main/sellerMain.slr";
+	}
+
+
+}

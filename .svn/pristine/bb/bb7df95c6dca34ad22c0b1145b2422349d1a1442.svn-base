@@ -1,0 +1,60 @@
+package com.pioneer.developer.home.mmember.web;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.pioneer.developer.home.hproduct.model.HProductDto;
+import com.pioneer.developer.home.mmember.model.MmemberDto;
+import com.pioneer.developer.home.mmember.service.MmemberService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+/**
+ * *********************************************************************************
+ * @PROJECT			: PlanB 쇼핑몰 구축
+ * @PROGRAMID		: MmemberRestController.java
+ * @DESCRIPTION 	: 회원 마이페이지 REST 컨트롤러
+ * @AUTHOR			: 김성우
+ * @CREATEDDATE 	: 2020. 05. 27
+ * HISTORY
+ * =================================================================================
+ * DATE                     NAME                DESCRIPTION
+ * ---------------------------------------------------------------------------------
+ * 2020. 05. 27             김성우                                     First Generated
+ * *********************************************************************************
+ */
+
+@Log4j2
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/rest/home/mmember")
+public class MmemberRestController {
+
+	private final MmemberService mmemberService;
+	private final HttpSession session;
+
+	// 마이페이지 정보
+//	@RequestMapping("myInformation")
+//	public List<Map<?,?>> myInformation() {
+//
+//		String id = (String) session.getAttribute("id");
+//		List<Map<?, ?>> myInformation = mmemberService.myInformation(id);
+//
+//		return myInformation;
+//	}
+
+	// 구매내역 목록
+	@RequestMapping("purchaseHistory")
+	public List<MmemberDto> purchaseHistory(String id) {
+		List<MmemberDto> purchaseHistory = mmemberService.purchaseHistory(id);
+		return purchaseHistory;
+	}
+
+}

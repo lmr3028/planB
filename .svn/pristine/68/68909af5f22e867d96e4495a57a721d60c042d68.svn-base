@@ -1,0 +1,15 @@
+package com.pioneer.developer.sys.amember.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.pioneer.developer.sys.amember.model.AmemberDto;
+
+
+@Mapper
+public interface AmemberMapper {
+
+	List<AmemberDto> memberList();
+
+}

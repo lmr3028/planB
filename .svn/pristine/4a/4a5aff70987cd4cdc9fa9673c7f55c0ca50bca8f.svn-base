@@ -1,0 +1,22 @@
+package com.pioneer.developer.home.main.web;
+
+import java.io.IOException;
+
+import javax.mail.MessagingException;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
+@RequiredArgsConstructor
+@Controller
+public class HomeMainController {
+
+	@RequestMapping("/")
+	public String main() {
+		return "main/main.home";
+	}
+}

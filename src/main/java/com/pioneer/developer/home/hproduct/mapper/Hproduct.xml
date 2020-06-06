@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.home.hproduct.mapper.HProductMapper">
+
+	<select id = "productList" resultType="hashmap">
+		SELECT
+			PRODUCTNO,
+			PNAME,
+			FORMAT((PRICE),0) AS PRICE,
+			P_PHOTO1NAME AS PHOTO1NAME,
+			CATEGORYNO
+		FROM PRODUCT WHERE USEYN = '사용' ORDER BY PRODUCTNO DESC
+	</select>
+
+	<update id = "productHit" parameterType="int" >
+		UPDATE PRODUCT SET HIT = HIT+1 WHERE PRODUCTNO = #{productno}";
+	</update>
+
+	<select id = "productDetail" parameterType="int" resultType="hProductDto">
+		SELECT
+		P.PRODUCTNO AS PRODUCTNO,
+		P.PNAME AS PNAME,
+		FORMAT((P.PRICE),0) AS PRICE,
+		P.CATEGORYNO AS CATEGORYNO,
+		C.CATEGORYNAME AS CATEGORYNAME,
+		P.SIMPLECONTENT AS SIMPLECONTENT,
+		P.CONTENT AS CONTENT,
+		P.P_PHOTO1NAME AS PHOTO1NAME,
+		P.P_PHOTO2NAME AS PHOTO2NAME,
+		P.P_PHOTO3NAME AS PHOTO3NAME,
+		P.P_PHOTO4NAME AS PHOTO4NAME,
+		TRUNCATE(AVG(R.RATING), 0) AS RATING,
+		COUNT(R.REVIEWNO) AS REVIEWNO
+		FROM
+		PRODUCT P
+		LEFT JOIN CATEGORY C ON P.CATEGORYNO = C.CATEGORYNO
+		LEFT JOIN REVIEW R ON P.PRODUCTNO = R.PRODUCTNO WHERE P.PRODUCTNO = #{productno} GROUP BY P.PRODUCTNO ;
+	</select>
+
+	<select id = "productListMain" resultType="hashmap">
+		SELECT
+			PRODUCTNO,
+			PNAME,
+			FORMAT((PRICE),0) AS PRICE,
+			P_PHOTO1NAME AS PHOTO1NAME,
+			CATEGORYNO
+		FROM PRODUCT WHERE USEYN = '사용' ORDER BY PRODUCTNO DESC LIMIT 3
+	</select>
+
+	<select id = "productListHit" resultType="hashmap">
+		SELECT
+			PRODUCTNO,
+			PNAME,
+			FORMAT((PRICE),0) AS PRICE,
+			P_PHOTO1NAME AS PHOTO1NAME,
+			CATEGORYNO
+		FROM PRODUCT WHERE USEYN = '사용' ORDER BY HIT DESC LIMIT 3
+	</select>
+
+	<select id = "reviewList" resultType="hashmap">
+		SELECT * FROM REVIEW WHERE PRODUCTNO = #{productno}
+	</select>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.seller.sorders.mapper.SordersMapper">
+
+	<select id="sordersList" resultType="hashmap">
+		SELECT
+		O.ORDERSNO AS ORDERSNO,
+		P.PRODUCTNO AS PRODUCTNO,
+		O.ID AS ID,
+		O.PNAME AS PNAME,
+		O.DELIVERY AS DELIVERY,
+		O.SYS_DATE AS SYS_DATE,
+		O.QUANTITY AS QUANTITY,
+		FORMAT((O.QUANTITY*O.PRICE), 0)AS PRICE
+		FROM ORDERS O LEFT JOIN PRODUCT P ON O.PRODUCTNO = P.PRODUCTNO
+		WHERE P.ID = #{id} GROUP BY O.ORDERSNO;
+	</select>
+
+	<update id = "deliveryEndorse">
+		UPDATE ORDERS SET DELIVERY = 2
+		WHERE ORDERSNO = #{ordersno}
+	</update>
+
+	<update id="deliveryReturn">
+		UPDATE ORDERS SET DELIVERY = 1
+		WHERE ORDERSNO = #{ordersno}
+	</update>
+
+
+</mapper>

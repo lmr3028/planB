@@ -1,0 +1,25 @@
+package com.pioneer.developer.home.hproduct.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.pioneer.developer.home.hproduct.mapper.HProductMapper;
+import com.pioneer.developer.home.hproduct.model.HProductDto;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@Service("hProductService")
+public class HProductServiceImpl implements HProductService{
+
+	private final HProductMapper hProductMapper;
+
+	@Override
+	public List<HProductDto> productList() {
+		return hProductMapper.productList();
+	}
+
+}

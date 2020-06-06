@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.sys.amember.mapper.AmemberMapper">
+
+	<select id="memberList" resultType="hashmap">
+		SELECT * FROM MEMBER M LEFT OUTER JOIN DIVISION D ON M.DIVISION = D.DIVISION WHERE M.DIVISION = '1' OR M.DIVISION = '2' OR M.DIVISION = '3'
+	</select>
+
+	<select id="memberView" parameterType="String" resultType="memberLoginDto">
+		SELECT
+		M.ID AS ID,
+		M.PASSWORD AS PASSWORD,
+		D.DIVISIONNAME AS DIVISIONNAME,
+		D.DIVISION AS DIVISION,
+		M.NAME AS NAME,
+		M.BIRTH AS BIRTH,
+		M.GENDER AS GENDER,
+		M.PHONE AS PHONE,
+		M.ADDRESS AS ADDRESS
+		FROM MEMBER M INNER JOIN DIVISION D ON M.DIVISION = D.DIVISION WHERE M.ID = #{id}
+	</select>
+
+	<update id = "divisionBlack">
+		UPDATE MEMBER
+		SET DIVISION = '3'
+		WHERE ID = #{id}
+	</update>
+
+	<update id = "divisionGeneral">
+		UPDATE MEMBER
+		SET DIVISION = '1'
+		WHERE ID = #{id}
+	</update>
+
+	<update id="updateMember" parameterType="memberLoginDto">
+		UPDATE MEMBER SET
+		DIVISION = #{division}
+		WHERE id = #{id}
+	</update>
+
+	<select id="memberConfirmList" resultType="hashmap">
+		SELECT * FROM MEMBER M LEFT OUTER JOIN DIVISION D ON M.DIVISION = D.DIVISION WHERE M.CONFIRM = 1
+	</select>
+
+	<update id = "confirmOK">
+		UPDATE MEMBER
+		SET
+		CONFIRM = '0',
+		DIVISION = '2'
+		WHERE ID = #{id}
+	</update>
+
+	<update id = "confirmX">
+		UPDATE MEMBER
+		SET
+		CONFIRM = '0'
+		WHERE ID = #{id}
+	</update>
+
+</mapper>

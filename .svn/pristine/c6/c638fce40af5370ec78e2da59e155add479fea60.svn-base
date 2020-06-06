@@ -1,0 +1,58 @@
+package com.pioneer.developer.home.mmember.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.pioneer.developer.home.hproduct.model.HProductDto;
+import com.pioneer.developer.home.mmember.mapper.MmemberMapper;
+import com.pioneer.developer.home.mmember.model.MmemberDto;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * *********************************************************************************
+ * @PROJECT			: PlanB 쇼핑몰 구축
+ * @PROGRAMID		: MmemberServiceImpl.java
+ * @DESCRIPTION 	: 회원 마이페이지 서비스 Impl
+ * @AUTHOR			: 김성우
+ * @CREATEDDATE 	: 2020. 05. 27
+ * HISTORY
+ * =================================================================================
+ * DATE                     NAME                DESCRIPTION
+ * ---------------------------------------------------------------------------------
+ * 2020. 05. 27             김성우                                     First Generated
+ * *********************************************************************************
+ */
+
+@Slf4j
+@RequiredArgsConstructor
+@Service("mmemberService")
+public class MmemberServiceImpl implements MmemberService{
+
+	private final MmemberMapper mmemberMapper;
+
+	// 마이페이지 회원 구분
+	@Override
+	public String myPageDivision(String id) {
+		return mmemberMapper.myPageDivision(id);
+	}
+	// 마이페이지 내 이름
+	@Override
+	public String myPageName(String id) {
+		return mmemberMapper.myPageName(id);
+	}
+	// 회원 탈퇴
+	@Override
+	public boolean memberDelete(String id) {
+		return mmemberMapper.memberDelete(id);
+	}
+	// 구매내역 목록
+	@Override
+	public List<MmemberDto> purchaseHistory(String id) {
+		return mmemberMapper.purchaseHistory(id);
+	}
+
+}

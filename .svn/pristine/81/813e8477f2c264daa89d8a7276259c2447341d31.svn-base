@@ -1,0 +1,5 @@
+package com.pioneer.developer.home.review.service;
+
+public interface ReviewService {
+
+}

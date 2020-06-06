@@ -1,0 +1,17 @@
+package com.pioneer.developer.home.hproduct.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+@Controller
+@RequestMapping("/home/product")
+public class HProductController {
+
+	@RequestMapping("/list")
+	public String productList() {
+		return "product/productList.home";
+	}
+}

@@ -1,0 +1,72 @@
+package com.pioneer.developer.sys.notice.web;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.pioneer.developer.sys.notice.model.NoticeWriteDto;
+import com.pioneer.developer.sys.notice.service.NoticeService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+
+/**
+ * *********************************************************************************
+ * @PROJECT      : PlanB 공지사항 구축
+ * @PROGRAMID    : NoticeController.java
+ * @DESCRIPTION  :
+ * @AUTHOR       : 임현우
+ * @CREATEDDATE  : 2020. 05. 11
+ * HISTORY
+ * =================================================================================
+ * DATE                NAME                  DESCRIPTION
+ * ---------------------------------------------------------------------------------
+ * 2020. 05. 11        임현우                              First Generated
+ * *********************************************************************************
+ */
+@Log4j2
+@RequiredArgsConstructor
+@Controller
+@RequestMapping("/sys/notice/")
+public class NoticeController {
+
+	private final NoticeService noticeService;
+
+	@Value("${file.path.notice}")
+	private String savePath;
+
+	//등록 화면 이동
+	@RequestMapping("addNoticeView")
+	public String addNoticeView() {
+		return "/notice/addNotice.sys";
+	}
+
+	//공지사항 등록
+	@RequestMapping("addNotice")
+	public String addNotice(NoticeWriteDto noticeWriteDto, Model model) throws IllegalStateException, IOException {
+		log.info(" ######## notice : " + noticeWriteDto.toString());
+
+		MultipartFile notice_file = noticeWriteDto.getNotice_file();
+
+		notice_file.transferTo(new File(savePath+notice_file.getOriginalFilename()));
+		noticeWriteDto.setNotice_filename(notice_file.getOriginalFilename());
+
+		noticeService.addNotice(noticeWriteDto);
+
+		return "redirect:/admin/notice/NoticeListView";
+	}
+
+
+	// (RestController에서 처리)
+	@RequestMapping("NoticeListView")
+	public String NoticeListView() {
+		return "/notice/noticeListView.sys";
+	}
+
+}

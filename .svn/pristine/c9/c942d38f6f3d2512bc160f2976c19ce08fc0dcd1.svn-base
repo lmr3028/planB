@@ -1,0 +1,98 @@
+package com.pioneer.developer.core.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
+
+import com.pioneer.developer.core.security.SHAEncryptor;
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/web/**",
+				                   "/swagger-ui.html/",
+				                   "/swagger-ui.html/**"
+				                  );
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+//		http.csrf().disable().authorizeRequests().antMatchers("/","/**").permitAll();
+		http.csrf().disable()
+			.authorizeRequests()
+//				.antMatchers("/", "/rest/**").permitAll()
+//				.antMatchers("/v/comn/err/**","/v/comn/user/**").permitAll()
+//				.antMatchers("/rest/comn/main/**","/rest/comn/cd/**","/rest/comn/user/**").permitAll()
+//				.antMatchers("/rest/comn/file/imgToFile").permitAll()
+//				.antMatchers("/**").authenticated()
+				.antMatchers("/**").permitAll()
+				.and()
+			.formLogin()
+				.loginPage("/member/join/loginSignUp")
+				.loginProcessingUrl("/rest/member/login")
+				.usernameParameter("id")
+				.passwordParameter("password")
+//				.authenticationDetailsSource(authenticationDetailsSource)
+//				.successHandler(customAuthenticationSuccessHandler())
+//				.failureHandler(customAuthenticationFailureHandler())
+				.permitAll()
+				.and()
+			.logout()
+				.logoutUrl("/logout")
+				.invalidateHttpSession(true)
+				.logoutSuccessUrl("/")
+				.and()
+			.sessionManagement()
+				.maximumSessions(1)
+					.expiredUrl("/")
+					.and()
+				.invalidSessionUrl("/")
+				.and()
+			.exceptionHandling()
+//				.authenticationEntryPoint(customAuthenticationEntryPointHandler())
+//				.accessDeniedHandler(customAccessDeniedHandler())
+				.and()
+			.httpBasic();
+
+	}
+
+
+//	@Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+////        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+////    	auth.authenticationProvider(customAuthenticationProvider);
+//        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+//    }
+
+    @Bean
+    public static SHAEncryptor passwordEncoder() {
+//    	return new ComnSecurityNoEncryptor();
+//      return new BCryptPasswordEncoder();
+      return new SHAEncryptor();
+    }
+
+	@Bean
+	public SHAEncryptor securitySHAEncryptor() {
+		return new SHAEncryptor();
+	}
+
+	@Bean
+	public HttpFirewall allowUrlEncodedSlashHttpFirewall(){
+		StrictHttpFirewall firewall = new StrictHttpFirewall();
+		firewall.setAllowUrlEncodedSlash(true);
+		return firewall;
+	}
+
+
+
+}
+

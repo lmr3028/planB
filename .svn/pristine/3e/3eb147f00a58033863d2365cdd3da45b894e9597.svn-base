@@ -1,0 +1,11 @@
+package com.pioneer.developer.home.hproduct.service;
+
+import java.util.List;
+
+import com.pioneer.developer.home.hproduct.model.HProductDto;
+
+public interface HProductService {
+
+	List<HProductDto> productList();
+
+}

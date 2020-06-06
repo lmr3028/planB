@@ -1,0 +1,5 @@
+package com.pioneer.developer.home.orders.service;
+
+public interface OrdersService {
+
+}

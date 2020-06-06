@@ -1,0 +1,33 @@
+.modal {padding-left:0 !important;}
+.modal-body {overflow-y:auto; max-height:76vh;}
+.modal-body > .kt-portlet {box-shadow:none; overflow-x:hidden;}
+.kt-wizard-v4 [data-ktwizard-type="step-content"][data-ktwizard-state="current"] {width:90%; padding-top:25px;}
+.modal-dialog {width:calc(100% - 5%); height:calc(100vh - 14%); margin:auto; top:50%; transform:translateY(-50%) !important;}
+.kt-form .kt-form__group.kt-form__group--inline > .kt-form__label > label {width:max-content;}
+.btn-sm.custom_btn {padding:3px 10px;}
+
+.kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__body {overflow-x:hidden !important;}
+.kt-datatable__row-detail > .kt-datatable__detail {padding:0 !important;}
+.kt-datatable > .kt-datatable__table > .kt-datatable__body .kt-datatable__row-detail .kt-datatable__detail table {width:100%;}
+.kt-datatable.kt-datatable--default > .kt-datatable__table > .kt-datatable__body .kt-datatable__row-detail .kt-datatable__detail {width:100%;}
+.kt-datatable__row-detail table > tr::before {content:''; width:36px; height:35px; display:block;}
+.kt-datatable__row-detail table > tr > td:first-of-type {width:85px;}
+table.kt-datatable__table > thead.kt-datatable__head > tr > th:first-of-type {width:38px;}
+table.kt-datatable__table > thead.kt-datatable__head > tr > th:nth-child(2) {width:42px;}
+table.kt-datatable__table > tbody.kt-datatable__body > tr > td:first-of-type {width:38px;}
+table.kt-datatable__table > tbody.kt-datatable__body > tr > td:nth-child(2) {width:42px;}
+@media (min-width: 600px) {.modal-dialog {max-width:500px;}}
+@media (min-width: 850px) {.modal-dialog {max-width:800px;}}
+@media (min-width: 1250px) {.modal-dialog {max-width:1200px;}}
+
+div.kt-header__topbar-wrapper {font-size:0;}
+div.kt-header__topbar-wrapper img, div.kt-header__topbar-wrapper div {display:inline-block;}
+div.kt-header__topbar-wrapper div {vertical-align:middle; padding-left:10px;}
+div.kt-header__topbar-wrapper div > span:last-of-type {font-weight:bold !important; font-size:1rem !important;}
+
+.kt-header__brand .kt-header__brand-logo {cursor:pointer;}
+.modal .modal-content .modal-header .modal-title {font-weight:bold !important;}
+.kt-datatable__row {cursor:pointer; transition:all 0.3s ease 0s;}
+.kt-datatable__row:hover {background:#fefefe;}
+
+.btn.btn-default.btn-sm.btn-font-sm.view,.btn.btn-default.btn-sm.btn-font-sm.edit {border-bottom-left-radius:0.2rem; border-top-left-radius:0.2rem;}

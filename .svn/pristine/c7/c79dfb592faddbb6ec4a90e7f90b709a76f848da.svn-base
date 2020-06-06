@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.home.orders.mapper.OrdersMapper">
+
+	<insert id="ordersAdd">
+		INSERT INTO ORDERS (PRODUCTNO, ID, SALES_ID, SYS_DATE, PNAME, QUANTITY, PRICE)VALUES
+		(#{productno}, #{id}, #{sales_id}, NOW(), #{pname}, #{quantity}, #{price})
+	</insert>
+
+	<select id = "memberInfo" resultType="mmemberDto">
+		 SELECT
+		 ID as id,
+		 NAME as name,
+		 PHONE as phone,
+		 ADDRESS as address
+		 FROM MEMBER WHERE ID = #{id};
+	</select>
+
+</mapper>

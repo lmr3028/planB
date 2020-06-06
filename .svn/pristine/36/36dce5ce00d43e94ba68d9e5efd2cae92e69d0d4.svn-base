@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pioneer.developer.seller.product.mapper.ProductMapper">
+
+	<insert id="addProduct">
+		INSERT INTO PRODUCT (ID,PNAME,PRICE,CATEGORYNO,SIMPLECONTENT,CONTENT,P_PHOTO1NAME,P_PHOTO2NAME,P_PHOTO3NAME,P_PHOTO4NAME)
+			VALUES(#{id},#{pname},#{price},#{categoryno},#{simplecontent},#{content},#{photo1name},#{photo2name},#{photo3name},#{photo4name})
+	</insert>
+
+	<select id="myProductList" resultType="hashmap">
+		SELECT
+		P.PRODUCTNO as PRODUCTNO,
+		P.PNAME as PNAME,
+		FORMAT((P.PRICE),0) as PRICE,
+		C.CATEGORYNAME as CATEGORYNAME,
+		P.USEYN as USEYN,
+		TRUNCATE(AVG(R.RATING), 0) as AVGRATING
+		FROM
+		PRODUCT P
+		LEFT JOIN CATEGORY C ON P.CATEGORYNO = C.CATEGORYNO
+		LEFT JOIN REVIEW R ON P.PRODUCTNO = R.PRODUCTNO WHERE P.ID = #{id} GROUP BY P.PRODUCTNO ;
+	</select>
+
+ 	<update id="productUpdateStatus">
+		UPDATE PRODUCT
+		SET USEYN = #{useYn}
+		WHERE PRODUCTNO = #{productno}
+	</update>
+
+	<select id="productView" parameterType="int" resultType="productDto">
+		SELECT
+		P.PRODUCTNO AS PRODUCTNO,
+		P.PNAME AS PNAME,
+		FORMAT((P.PRICE),0) AS PRICE,
+		P.CATEGORYNO AS CATEGORYNO,
+		C.CATEGORYNAME AS CATEGORYNAME,
+		P.SIMPLECONTENT AS SIMPLECONTENT,
+		P.CONTENT AS CONTENT,
+		P.P_PHOTO1NAME AS PHOTO1NAME,
+		P.P_PHOTO2NAME AS PHOTO2NAME,
+		P.P_PHOTO3NAME AS PHOTO3NAME,
+		P.P_PHOTO4NAME AS PHOTO4NAME,
+		TRUNCATE(AVG(R.RATING), 0) AS RATING,
+		COUNT(R.REVIEWNO) AS REVIEWNO
+		FROM
+		PRODUCT P
+		LEFT JOIN CATEGORY C ON P.CATEGORYNO = C.CATEGORYNO
+		LEFT JOIN REVIEW R ON P.PRODUCTNO = R.PRODUCTNO WHERE P.PRODUCTNO = #{productno} GROUP BY P.PRODUCTNO ;
+	</select>
+
+	<update id="productUpdate" parameterType="productDto">
+		UPDATE PRODUCT SET
+			 PNAME = #{pname}
+			,PRICE = #{price}
+			,CATEGORYNO = #{categoryno}
+			,SIMPLECONTENT = #{simplecontent}
+		WHERE PRODUCTNO = #{productno} AND ID = #{id}
+	</update>
+
+	<select id="myProductReviewList" resultType="hashMap">
+		SELECT R.REVIEWNO, R.PRODUCTNO, R.ID, R.CONTENTS, R.SYS_DATE, R.RATING
+		FROM REVIEW R JOIN PRODUCT P ON R.PRODUCTNO = P.PRODUCTNO
+		WHERE P.ID = #{id}  ORDER BY REVIEWNO
+	</select>
+
+</mapper>

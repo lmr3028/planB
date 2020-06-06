@@ -1,0 +1,14 @@
+package com.pioneer.developer.home.hproduct.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.pioneer.developer.home.hproduct.model.HProductDto;
+
+@Mapper
+public interface HProductMapper {
+
+	List<HProductDto> productList();
+
+}

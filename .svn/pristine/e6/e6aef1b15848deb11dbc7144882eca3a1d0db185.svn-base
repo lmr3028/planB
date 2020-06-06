@@ -1,0 +1,33 @@
+package com.pioneer.developer.seller.sellermain.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.pioneer.developer.seller.sellermain.mapper.SellerMainMapper;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class SellerMainServiceImpl implements SellerMainService {
+
+	private final SellerMainMapper sellerMainMapper;
+
+
+
+	@Override
+	public List<Map<?, ?>> getGraph4Data(String id) {
+		return sellerMainMapper.getGraph4Data(id);
+	}
+
+	@Override
+	public List<Map<?, ?>> getGraph3Data(String id) {
+		return sellerMainMapper.getGraph3Data(id);
+	}
+
+
+}

@@ -1,0 +1,34 @@
+package com.pioneer.developer.seller.product.model;
+
+import org.apache.ibatis.type.Alias;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.pioneer.developer.home.review.model.ReviewWriteDto;
+
+import lombok.Data;
+
+@Data
+@Alias("productDto")
+public class ProductDto extends ReviewWriteDto{
+	private int productno;
+	private String id;
+	private String price;
+
+	private String simplecontent;
+
+	private String content;
+	private Integer hit;
+	private MultipartFile mainImg;
+	private MultipartFile[] subImg;
+	private String pname;
+	private String useYn;
+
+	private String p_photo1name;
+	private String p_photo2name;
+	private String p_photo3name;
+	private String p_photo4name;
+
+	private int categoryno;
+	private String category_name;
+
+}
